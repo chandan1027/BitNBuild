@@ -1,0 +1,41 @@
+{% comment %} {% extends "socialaccount/base_entrance.html" %} {% endcomment %}
+{% load i18n %}
+{% load allauth %}
+{% load static %}
+
+{% comment %} {% block head_title %}
+    {% trans "Sign In" %}
+{% endblock head_title %} {% endcomment %}
+
+{% block content %}
+<link rel="stylesheet" href="{% static 'css/social_login.css' %}">
+<div class="social-login-container">
+    {% if process == "connect" %}
+        <h1 class="social-login-title">
+            {% blocktrans with provider.name as provider %}Connect {{ provider }}{% endblocktrans %}
+        </h1>
+        <p>
+            {% blocktrans with provider.name as provider %}You are about to connect a new third-party account from {{ provider }}.{% endblocktrans %}
+        </p>
+    {% else %}
+        <h1 class="social-login-title">
+            {% blocktrans with provider.name as provider %}Sign In Via {{ provider }}{% endblocktrans %}
+        </h1>
+        <p>
+            {% blocktrans with provider.name as provider %}You are about to sign in using a third-party account from {{ provider }}.{% endblocktrans %}
+        </p>
+    {% endif %}
+    <div class="btns">
+    <form method="post" class="social-login-form">
+      {% csrf_token %}
+      <button type="submit" class="btn-social-submit">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png" alt="Google Logo" class="btn-google-logo">
+          {% trans "Continue" %}
+      </button>
+    </form>
+    
+    <a href="{% url 'welcome' %}"><button type="submit" class="back-btn" >Back</button></a>
+  </div>
+
+</div>
+{% endblock content %}

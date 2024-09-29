@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Clothes Management</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        {% comment %} background-image: url('data:image/jpeg;base64,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'); {% endcomment %}
+        background-repeat: no-repeat;
+        background-size:cover;
+        color: #333;
+        margin: 0;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+        margin-bottom: 30px;
+        margin-top: 20px;
+      }
+
+      .search-container {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 30px;
+      }
+
+      .search-container input,
+      .search-container select {
+        padding: 10px;
+        margin-right: 10px;
+        font-size: 1em;
+        border-radius: 30px;
+        border: 1px solid #ddd;
+        background: #fff;
+        transition: all 0.3s;
+      }
+
+      .search-container input:focus,
+      .search-container select:focus {
+        border-color: #007bff;
+        outline: none;
+      }
+
+      .search-container button {
+        background-color: #007bff;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 30px;
+        cursor: pointer;
+        font-size: 1em;
+        transition: background-color 0.3s;
+      }
+
+      .search-container button:hover {
+        background-color: #0056b3;
+      }
+
+      .container {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      .card {
+        width: 100%;
+        max-width: 280px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        margin: 15px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      .card img {
+        width: auto;
+        height: 160px;
+        margin-top: 15px;
+        border-radius: 10px;
+        transition: transform 0.3s;
+      }
+
+      .card img:hover {
+        transform: scale(1.05);
+      }
+
+      .card p {
+        margin: 15px 0;
+        font-weight: bold;
+        font-size: 1.1em;
+        text-align: center;
+      }
+
+      .btn-heart {
+        font-size: 2em;
+        color: grey;
+        cursor: pointer;
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        transition: color 0.3s;
+      }
+
+      .btn-heart:hover {
+        color: #ff6961;
+      }
+
+      .heart-favorite {
+        color: #ff6961 !important;
+      }
+
+      .button-group {
+        display: flex;
+        justify-content: center;
+        gap: 6px;
+        margin-bottom: 20px;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 6px 10px;
+        margin: 5px;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        color: white;
+        text-decoration: none;
+        font-size: 1.1em;
+        transition: background-color 0.3s, box-shadow 0.3s;
+        filter: opacity(0.7);
+      }
+
+      .btn:hover {
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.15);
+        filter: opacity(1.1);
+      }
+
+      .btn-success {
+        background-color: #28a745;
+      }
+
+      .btn-primary {
+        background-color: #007bff;
+      }
+
+      .btn-danger {
+        background-color: #dc3545;
+      }
+
+      .btn-info {
+        background-color: #17a2b8;
+      }
+
+      .btn-dark {
+        background-color: #343a40;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 600px) {
+        .card {
+          max-width: 100%;
+          height: auto;
+        }
+
+        .search-container {
+          flex-direction: column;
+          align-items: center;
+          margin: 0px 10px;
+        }
+
+        .search-container input,
+        .search-container select {
+          margin-bottom: 10px;
+        }
+      }
+
+      /* Navbar Styling */
+      .navbar {
+        background-color: #343a40;
+        margin: 0px !important;
+      }
+      .navbar-brand {
+        color: #ffffff !important;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+      .nav-link {
+        color: #ffffff !important;
+      }
+      .nav-link:hover {
+        color: #0fd6b0 !important;
+      }
+      .navbar-toggler {
+        border-color: #ffffff;
+      }
+      /*.navbar-toggler-icon {
+        background-color: #ffffff;
+      } */
+
+      /* Profile Picture */
+      .profile-pic {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 6px;
+        border: rgb(132, 255, 0) 3px solid;
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        .profile-pic {
+          width: 40px;
+          height: 40px;
+        }
+      }
+
+      /* Buttons */
+      .lbtn {
+        background-color: rgba(7, 63, 43, 0.929);
+        margin: 10px;
+        padding: 6px 12px;
+        text-decoration: none;
+        border-radius: 10px;
+        color: #ffffff;
+        font-size: 1rem;
+        transition: 0.5s ease;
+        border: greenyellow 1px solid;
+      }
+      .lbtn:hover {
+        background-color: rgb(11, 116, 80);
+        box-shadow: 0px 0px 5px rgba(0, 255, 0, 0.68);
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <!-- Navbar Brand -->
+        <a class="navbar-brand" href="#">Vastra</a>
+
+        <!-- Toggler for Mobile View -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Links and User Actions -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          {% if user.is_authenticated %}
+          <!-- Navbar Items for Authenticated Users -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="{% url 'welcome' %}"
+                >Home</a
+              >
+              <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  My Collections
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="{% url 'view_clothes' %}"
+                      >Clothes</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="{% url 'view_accessories' %}"
+                      >Accessories</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="{% url 'view_grooming' %}"
+                      >Grooming</a
+                    >
+                  </li>
+                  {% comment %}
+                  <li><hr class="dropdown-divider" /></li>
+                  {% endcomment %}
+                </ul>
+              </li>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'favorite_items' %}">Favorites</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'chat_room' %}">Community</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'to_buy_list' %}">WishList</a>
+            </li>
+              <li class="nav-item">
+                <a class="nav-link " href="https://ecoclothingindia.com/">Shop(ECO-Friendly)</a>
+              </li>
+              
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'analytics' %}">Analytics</a>
+            </li>
+          </ul>
+          {% endif %}
+
+          <!-- User Login/Logout and Profile Picture -->
+          <div class="d-flex ms-auto align-items-center">
+            {% if user.is_authenticated %}
+            <!-- Logout Button and Profile Picture -->
+            <a class="lbtn" href="{% url 'logout' %}">Logout</a>
+            {% if profile_picture_url %}
+            <img
+              src="{{ profile_picture_url }}"
+              alt="Profile Picture"
+              class="profile-pic"
+            />
+            {% endif %} {% else %}
+            <!-- Login, Signup, and Google SignIn Buttons -->
+            <a class="lbtn" href="{% url 'signin' %}">Login</a>
+            <a class="lbtn" href="{% url 'signup' %}">Sign Up</a>
+            <a class="lbtn" href="/accounts/google/login/?next=/"
+              >Google SignIn</a
+            >
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+    <h1>Clothes Management</h1>
+
+    <!-- Search form -->
+    <div class="search-container">
+      <form method="get" action="{% url 'view_clothes' %}">
+        <input
+          type="text"
+          name="search"
+          placeholder="Search by name"
+          value="{{ search_query }}"
+        />
+        <select name="category">
+          <option value="">Select Category</option>
+          {% for category in categories %}
+          <option value="{{ category.name }}">{{ category.name }}</option>
+          {% endfor %}
+        </select>
+        <select name="tag">
+          <option value="">Select Tag</option>
+          {% for tag in tags %}
+          <option value="{{ tag.name }}">{{ tag.name }}</option>
+          {% endfor %}
+        </select>
+        <button type="submit"><i class="fas fa-search"></i> Search</button>
+      </form>
+    </div>
+
+    <!-- Add new clothes button -->
+    <div style="text-align: center; margin-bottom: 0px; filter: opacity(1)">
+      <a
+        href="{% url 'add_clothes' %}"
+        class="btn btn-success"
+        style="filter: opacity(1)"
+        >Add New</a
+      >
+    </div>
+
+    <div class="container">
+      {% for clothes in clothes %}
+      <div class="card">
+        <span
+          class="btn-heart {% if clothes.is_favorite %}heart-favorite{% endif %}"
+          onclick="toggleFavorite('{{ clothes.id }}')"
+          >♥</span
+        >
+        <img src="{{ clothes.photo.url }}" alt="{{ clothes.name }}" />
+        <p>{{ clothes.name }}</p>
+        <div class="button-group">
+          <a
+            href="{% url 'update_clothes' clothes.id %}"
+            class="btn btn-primary"
+            title="Update"
+          >
+            <i class="fas fa-edit"></i>
+          </a>
+          <a
+            href="{% url 'delete_clothes' clothes.id %}"
+            class="btn btn-danger"
+            title="Delete"
+          >
+            <i class="fas fa-trash"></i>
+          </a>
+          <a
+            href="{% url 'wear_today' clothes.id %}"
+            class="btn btn-success"
+            title="Wear Today"
+          >
+            <i class="fas fa-tshirt"></i>
+          </a>
+          <a
+            href="mailto:chandan@goonj.org"
+            class="btn btn-info"
+            title="Donate"
+          >
+            <i class="fas fa-donate"></i>
+          </a>
+          <a
+            href="tel:78383-71356"
+            class="btn btn-dark"
+            title="Recycle"
+          >
+            <i class="fas fa-recycle"></i>
+          </a>
+        </div>
+      </div>
+      {% empty %}
+      <p>No clothes items found.</p>
+      {% endfor %}
+    </div>
+
+    <script>
+      function toggleFavorite(clothesId) {
+        const form = document.createElement("form");
+        form.method = "post";
+        form.action = `/clothes/favorite/${clothesId}/`;
+
+        const csrfInput = document.createElement("input");
+        csrfInput.type = "hidden";
+        csrfInput.name = "csrfmiddlewaretoken";
+        csrfInput.value = "{{ csrf_token }}"; // Include CSRF token
+
+        form.appendChild(csrfInput);
+        document.body.appendChild(form);
+        form.submit();
+      }
+    </script>
+  </body>
+</html>

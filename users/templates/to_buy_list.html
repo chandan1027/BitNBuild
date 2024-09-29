@@ -1,0 +1,308 @@
+<!-- your_app/templates/your_app/to_buy_list.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To Buy List</title>
+
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    {% comment %}
+    <link rel="stylesheet" href="{% static 'your_app/css/styles.css' %}" />
+    <!-- Link to your CSS file -->
+    {% endcomment %}
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        {% comment %} padding: 20px; {% endcomment %}
+      }
+
+      .container {
+        max-width: 800px;
+        margin: 10px auto;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+      }
+
+      .title {
+        text-align: center;
+        color: #333;
+      }
+
+      .card-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+      }
+
+      .card {
+        background-color: #eaeaea;
+        border-radius: 8px;
+        padding: 20px;
+        width: 100%;
+        max-width: 300px; /* Adjust card width as needed */
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+      }
+
+      .card:hover {
+        transform: scale(1.05);
+      }
+
+      .item-name {
+        font-size: 1.5em;
+        color: #333;
+      }
+
+      .button-group {
+        margin-top: 15px;
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .button {
+        padding: 10px 15px;
+        border: none;
+        border-radius: 5px;
+        text-decoration: none;
+        color: white;
+        cursor: pointer;
+        font-weight: bold;
+      }
+
+      .update-button {
+        background-color: #007bff;
+      }
+
+      .delete-button {
+        background-color: #dc3545;
+      }
+
+      .add-item-button {
+        display: inline-block;
+        margin-top: 20px;
+        background-color: #28a745;
+      }
+
+      .add-item-button:hover,
+      .update-button:hover,
+      .delete-button:hover {
+        opacity: 0.8; /* Add hover effect */
+      }
+
+      /* Navbar Styling */
+      .navbar {
+        background-color: #343a40;
+      }
+      .navbar-brand {
+        color: #ffffff !important;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+      .nav-link {
+        color: #ffffff !important;
+      }
+      .nav-link:hover {
+        color: #0fd6b0 !important;
+      }
+      .navbar-toggler {
+        border-color: #ffffff;
+      }
+      /*.navbar-toggler-icon {
+        background-color: #ffffff;
+      } */
+
+      /* Profile Picture */
+      .profile-pic {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 6px;
+        border: rgb(132, 255, 0) 3px solid;
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        .profile-pic {
+          width: 40px;
+          height: 40px;
+        }
+      }
+
+      /* Buttons */
+      .lbtn {
+        background-color: rgba(7, 63, 43, 0.929);
+        margin: 10px;
+        padding: 6px 12px;
+        text-decoration: none;
+        border-radius: 10px;
+        color: #ffffff;
+        font-size: 1rem;
+        transition: 0.5s ease;
+        border: greenyellow 1px solid;
+      }
+      .lbtn:hover {
+        background-color: rgb(11, 116, 80);
+        box-shadow: 0px 0px 5px rgba(0, 255, 0, 0.68);
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <!-- Navbar Brand -->
+        <a class="navbar-brand" href="#">Vastra</a>
+
+        <!-- Toggler for Mobile View -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Links and User Actions -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          {% if user.is_authenticated %}
+          <!-- Navbar Items for Authenticated Users -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="{% url 'welcome' %}"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item dropdown">
+                <a
+                  class="nav-link dropdown-toggle"
+                  href="#"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  My Collections
+                </a>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" href="{% url 'view_clothes' %}"
+                      >Clothes</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="{% url 'view_accessories' %}"
+                      >Accessories</a
+                    >
+                  </li>
+                  <li>
+                    <a class="dropdown-item" href="{% url 'view_grooming' %}"
+                      >Grooming</a
+                    >
+                  </li>
+                  {% comment %}
+                  <li><hr class="dropdown-divider" /></li>
+                  {% endcomment %}
+                </ul>
+              </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'favorite_items' %}"
+                >Favorites</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'chat_room' %}">Community</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'to_buy_list' %}">WishList</a>
+            </li>
+            
+            
+            <li class="nav-item">
+                <a class="nav-link " href="https://ecoclothingindia.com/">Shop(ECO-Friendly)</a>
+              </li>
+              
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'analytics' %}">Analytics</a>
+              </li>
+          </ul>
+          {% endif %}
+
+          <!-- User Login/Logout and Profile Picture -->
+          <div class="d-flex ms-auto align-items-center">
+            {% if user.is_authenticated %}
+            <!-- Logout Button and Profile Picture -->
+            <a class="lbtn" href="{% url 'logout' %}">Logout</a>
+            {% if profile_picture_url %}
+            <img
+              src="{{ profile_picture_url }}"
+              alt="Profile Picture"
+              class="profile-pic"
+            />
+            {% endif %} {% else %}
+            <!-- Login, Signup, and Google SignIn Buttons -->
+            <a class="lbtn" href="{% url 'signin' %}">Login</a>
+            <a class="lbtn" href="{% url 'signup' %}">Sign Up</a>
+            <a class="lbtn" href="/accounts/google/login/?next=/"
+              >Google SignIn</a
+            >
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+    <div class="container">
+      <h1 class="title">To Buy List</h1>
+      <div class="card-container">
+        {% for item in items %}
+        <div class="card">
+          <h2 class="item-name">{{ item.name }}</h2>
+          <div class="button-group">
+            <a
+              href="{% url 'update_to_buy_item' item.id %}"
+              class="button update-button"
+              >Update</a
+            >
+            <form method="post" style="display: inline">
+              {% csrf_token %}
+              <input type="hidden" name="item_id" value="{{ item.id }}" />
+              <button
+                type="submit"
+                name="delete_item"
+                class="button delete-button"
+              >
+                Delete
+              </button>
+            </form>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      <a href="{% url 'add_to_buy_item' %}" class="button add-item-button"
+        >Add Item</a
+      >
+    </div>
+  </body>
+</html>

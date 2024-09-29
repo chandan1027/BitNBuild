@@ -1,0 +1,136 @@
+/* Basic reset and layout styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Poppins", sans-serif;
+  background-color: #f4f7fa;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  height: 100vh;
+}
+
+/* Styling for social-login-container */
+.social-login-container {
+  background: #ffffff;
+  border-radius: 8px;
+  border: 1px solid black;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  max-width: 500px;
+  width: 40%;
+  height: 30%;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+/* Title styling */
+.social-login-title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #000000;
+  margin-bottom: 20px;
+}
+
+/* Description styling */
+.social-login-container p {
+  font-size: 16px;
+  color: #3f3f3f;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+.btns {
+  display: flex;
+  flex-direction: row;
+  gap: 40px;
+}
+
+.back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #fa4036;
+  color: #ffffff;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  text-transform: uppercase;
+  outline: none;
+}
+
+.btns a {
+  text-decoration: none;
+}
+
+/* Button styling */
+.btn-social-submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #063c31;
+  color: #ffffff;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  text-transform: uppercase;
+  outline: none;
+}
+
+.btn-social-submit:hover {
+  background-color: #11595f; /* Darker shade for hover effect */
+  transform: scale(1.02);
+}
+
+.btn-social-submit:focus {
+  box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.5); /* Focus ring */
+}
+
+/* Google logo styling inside the button */
+.btn-google-logo {
+  width: 24px;
+  height: 24px;
+  margin-right: 8px;
+  vertical-align: middle;
+}
+
+/* Responsive styling */
+@media (max-width: 768px) {
+  .social-login-container {
+    padding: 10px;
+    max-width: 500px;
+    width: 90% !important;
+  }
+
+  .social-login-title {
+    font-size: 24px;
+  }
+
+  .btn-social-submit {
+    padding: 10px 20px;
+    font-size: 14px;
+  }
+}
+
+/* Extra styles for elegant appearance */
+.social-login-container {
+  transition: border-color 0.3s ease;
+  transition: box-shadow 3s ease;
+}
+
+.social-login-container:hover {
+  border-color: #021a06;
+  box-shadow: #021a0660 0px 0px 10px;
+}

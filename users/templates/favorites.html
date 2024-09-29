@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+      crossorigin="anonymous"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <title>Favorite Items</title>
+    <style>
+      /* General Reset and Font */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Roboto", sans-serif;
+        background-color: #f7f7f7;
+        color: #333;
+        padding: 20px;
+      }
+
+      h1 {
+        margin-top: 20px;
+        text-align: center;
+        margin-bottom: 40px;
+        color: #222;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+        margin-bottom: 20px;
+        color: #444;
+        text-transform: uppercase;
+      }
+
+      /* Scrollable container with arrows */
+      .item-section {
+        position: relative;
+        margin-bottom: 40px;
+      }
+
+      /* Scroll container - maximum of 2 rows */
+      .item-grid {
+        display: flex;
+        gap: 20px;
+        padding-bottom: 10px;
+        flex-wrap: nowrap;
+        overflow-x: scroll;
+        scroll-snap-type: x mandatory;
+        scroll-behavior: smooth;
+      }
+
+      .item {
+        border: 1px solid #ddd;
+        border-radius: 10px;
+        padding: 15px;
+        width: 200px;
+        text-align: center;
+        background-color: #fff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s, box-shadow 0.3s;
+        flex: 0 0 auto;
+      }
+
+      .item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .item img {
+        width: 100%;
+        height: auto;
+        max-height: 150px;
+        object-fit: cover;
+        border-radius: 8px;
+        transition: transform 0.3s ease;
+      }
+
+      .item img:hover {
+        transform: scale(1.05);
+      }
+
+      .item h3 {
+        font-size: 1.1rem;
+        margin: 10px 0;
+        color: #555;
+      }
+
+      .item p {
+        font-size: 0.9rem;
+        color: #777;
+      }
+
+      /* Scroll Buttons */
+      .scroll-button {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background-color: rgba(0, 0, 0, 0.5);
+        border: none;
+        color: white;
+        padding: 10px;
+        cursor: pointer;
+        z-index: 10;
+      }
+
+      .scroll-left {
+        left: 0;
+      }
+
+      .scroll-right {
+        right: 0;
+      }
+
+      .scroll-button:hover {
+        background-color: rgba(0, 0, 0, 0.7);
+      }
+
+      /* Styling for scrollbar (modern browsers) */
+      .item-grid::-webkit-scrollbar {
+        height: 8px;
+      }
+
+      .item-grid::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 10px;
+      }
+
+      .item-grid::-webkit-scrollbar-track {
+        background-color: #f1f1f1;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 768px) {
+        .item {
+          width: 150px;
+        }
+
+        h2 {
+          font-size: 1.25rem;
+        }
+
+        .scroll-button {
+          display: none; /* Hide buttons on small screens */
+        }
+      }
+      /* Navbar Styling */
+      .navbar {
+        background-color: #343a40;
+        margin: -20px;
+        margin-bottom: 0px;
+      }
+      .navbar-brand {
+        color: #ffffff !important;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+      .nav-link {
+        color: #ffffff !important;
+      }
+      .nav-link:hover {
+        color: #0fd6b0 !important;
+      }
+      .navbar-toggler {
+        border-color: #ffffff;
+      }
+      /*.navbar-toggler-icon {
+        background-color: #ffffff;
+      } */
+
+      /* Profile Picture */
+      .profile-pic {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin: 6px;
+        border: rgb(132, 255, 0) 3px solid;
+      }
+
+      /* Responsive Adjustments */
+      @media (max-width: 768px) {
+        .profile-pic {
+          width: 40px;
+          height: 40px;
+        }
+      }
+
+      /* Buttons */
+      .lbtn {
+        background-color: rgba(7, 63, 43, 0.929);
+        margin: 10px;
+        padding: 6px 12px;
+        text-decoration: none;
+        border-radius: 10px;
+        color: #ffffff;
+        font-size: 1rem;
+        transition: 0.5s ease;
+        border: greenyellow 1px solid;
+      }
+      .lbtn:hover {
+        background-color: rgb(11, 116, 80);
+        box-shadow: 0px 0px 5px rgba(0, 255, 0, 0.68);
+      }
+    </style>
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg">
+      <div class="container-fluid">
+        <!-- Navbar Brand -->
+        <a class="navbar-brand" href="#">Vastra</a>
+
+        <!-- Toggler for Mobile View -->
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Navbar Links and User Actions -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          {% if user.is_authenticated %}
+          <!-- Navbar Items for Authenticated Users -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a
+                class="nav-link active"
+                aria-current="page"
+                href="{% url 'welcome' %}"
+                >Home</a
+              >
+            </li>
+            <li class="nav-item dropdown">
+              <a
+                class="nav-link dropdown-toggle"
+                href="#"
+                role="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                My Collections
+              </a>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="{% url 'view_clothes' %}"
+                    >Clothes</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'view_accessories' %}"
+                    >Accessories</a
+                  >
+                </li>
+                <li>
+                  <a class="dropdown-item" href="{% url 'view_grooming' %}"
+                    >Grooming</a
+                  >
+                </li>
+                {% comment %}
+                <li><hr class="dropdown-divider" /></li>
+                {% endcomment %}
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'favorite_items' %}"
+                >Favorites</a
+              >
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'chat_room' %}">Community</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'to_buy_list' %}">WishList</a>
+              </li>
+
+            
+              <li class="nav-item">
+                <a class="nav-link " href="https://ecoclothingindia.com/">Shop(ECO-Friendly)</a>
+              </li>
+              
+            <li class="nav-item">
+                <a class="nav-link" href="{% url 'analytics' %}">Analytics</a>
+              </li>
+          </ul>
+          {% endif %}
+
+          <!-- User Login/Logout and Profile Picture -->
+          <div class="d-flex ms-auto align-items-center">
+            {% if user.is_authenticated %}
+            <!-- Logout Button and Profile Picture -->
+            <a class="lbtn" href="{% url 'logout' %}">Logout</a>
+            {% if profile_picture_url %}
+            <img
+              src="{{ profile_picture_url }}"
+              alt="Profile Picture"
+              class="profile-pic"
+            />
+            {% endif %} {% else %}
+            <!-- Login, Signup, and Google SignIn Buttons -->
+            <a class="lbtn" href="{% url 'signin' %}">Login</a>
+            <a class="lbtn" href="{% url 'signup' %}">Sign Up</a>
+            <a class="lbtn" href="/accounts/google/login/?next=/"
+              >Google SignIn</a
+            >
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </nav>
+    <h1>Your Favorite Items</h1>
+
+    <!-- Clothes Section -->
+    <section class="item-section">
+      <h2>Favorite Clothes</h2>
+      <button class="scroll-button scroll-left" onclick="scrollLeft('clothes')">
+        &larr;
+      </button>
+      <div class="item-grid" id="clothes-grid">
+        {% for cloth in favorite_clothes %}
+        <div class="item">
+          <img src="{{ cloth.photo.url }}" alt="{{ cloth.name }}" />
+          <h3>{{ cloth.name }}</h3>
+          <p>Location: {{ cloth.location }}</p>
+          <p>Occasion: {{ cloth.occasion.name }}</p>
+        </div>
+        {% empty %}
+        <p>No favorite clothes added yet.</p>
+        {% endfor %}
+      </div>
+      <button
+        class="scroll-button scroll-right"
+        onclick="scrollRight('clothes')"
+      >
+        &rarr;
+      </button>
+    </section>
+
+    <!-- Accessories Section -->
+    <section class="item-section">
+      <h2>Favorite Accessories</h2>
+      <button
+        class="scroll-button scroll-left"
+        onclick="scrollLeft('accessories')"
+      >
+        &larr;
+      </button>
+      <div class="item-grid" id="accessories-grid">
+        {% for accessory in favorite_accessories %}
+        <div class="item">
+          <img src="{{ accessory.photo.url }}" alt="{{ accessory.name }}" />
+          <h3>{{ accessory.name }}</h3>
+          <p>Location: {{ accessory.location }}</p>
+          <p>Occasion: {{ accessory.occasion.name }}</p>
+        </div>
+        {% empty %}
+        <p>No favorite accessories added yet.</p>
+        {% endfor %}
+      </div>
+      <button
+        class="scroll-button scroll-right"
+        onclick="scrollRight('accessories')"
+      >
+        &rarr;
+      </button>
+    </section>
+
+    <!-- Grooming Section -->
+
+    <script>
+      function scrollLeft(section) {
+        const grid = document.getElementById(section + "-grid");
+        grid.scrollBy({ left: -300, behavior: "smooth" });
+      }
+
+      function scrollRight(section) {
+        const grid = document.getElementById(section + "-grid");
+        grid.scrollBy({ left: 300, behavior: "smooth" });
+      }
+    </script>
+  </body>
+</html>
